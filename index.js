@@ -35,9 +35,10 @@ var bootcampLocations=[
 				];
 
 var geocodePromises=[];
+var apiKey = process.env.googleAPIKey;
 
 var googleMapsClient = Promise.promisifyAll(require('@google/maps').createClient({
-  key: 'AIzaSyDKmwcRIx2Wg2QYJfhGZxIDhEuO5TXi_h0'
+  key: apiKey
 }));
 
 

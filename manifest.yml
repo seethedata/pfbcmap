@@ -1,6 +1,9 @@
 # pfbcmap Manifest
+---
 applications:
 - name: pfbcmap
-memory: 512MB
-host: pfbcmap
-buildpack: nodejs_buildpack
+  memory: 512MB
+  host: pfbcmap
+  buildpack: nodejs_buildpack
+  env:
+    googleAPIKey : "AIzaSyDKmwcRIx2Wg2QYJfhGZxIDhEuO5TXi_h0"
