@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "author": "Chris Ghiorzi",
   "dependencies": {
-    "express": "4.14.0"
+    "express": "4.14.0",
+	"pug": "2.0.0-beta6",
+		"bluebird": "3.4.6",
+	"@google/maps": "0.1.0"
   },
   "engines": {
     "node": "5.12.0",
