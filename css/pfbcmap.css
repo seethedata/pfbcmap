@@ -8,3 +8,5 @@ html,body {
 #map {
         height: 100%;
 }
+
+.infoMarker img { width : 87px ; height : 100px }
