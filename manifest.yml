@@ -3,6 +3,8 @@ applications:
 - name: pfbcmap
   memory: 512MB
   host: pfbcmap
-  buildpack: nodejs_buildpack
+  buildpack: go_buildpack
+  command: pfbcmap
   env:
     googleAPIKey : "AIzaSyDKmwcRIx2Wg2QYJfhGZxIDhEuO5TXi_h0"
+    GOPACKAGENAME : "pfbcmap"
