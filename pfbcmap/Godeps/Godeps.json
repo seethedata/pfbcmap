@@ -1,0 +1,5 @@
+{
+	"ImportPath": "github.com/seethedata/pfbcmap/pfbcmap",
+	"GoVersion": "go1.7",
+	"Deps": []
+}

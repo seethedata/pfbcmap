@@ -1,10 +1,19 @@
 ---
+memory: 512MB
+buildpack: go_buildpack
+env:
+  googleAPIKey : "AIzaSyDKmwcRIx2Wg2QYJfhGZxIDhEuO5TXi_h0"
 applications:
+- name: pfbcapi
+  path: ./pfbcapi
+  host: pfbcapi
+  command: pfbcapi
+  env:
+    GOPACKAGENAME : "pfbcapi"
 - name: pfbcmap
-  memory: 512MB
+  path: ./pfbcmap
   host: pfbcmap
-  buildpack: go_buildpack
   command: pfbcmap
   env:
-    googleAPIKey : "AIzaSyDKmwcRIx2Wg2QYJfhGZxIDhEuO5TXi_h0"
     GOPACKAGENAME : "pfbcmap"
+    dataURL: "http://pfbcapi.cfapps.io/data"
