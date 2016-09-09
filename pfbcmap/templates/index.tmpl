@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+	<head>
+	<title>Pathfinder Bootcamp Locations</title>
+	<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="../css/pfbcmap.css" rel="stylesheet"/>
+	<script type='text/javascript' src='../js/jquery.min.js'></script>
+	<script type='text/javascript' src='../js/bootstrap.min.js'></script>
+	<body class="mapBody">
+		<nav class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Pathfinder Bootcamps</a>
+				</div>
+				<img class="col-xs-3" src="images/federation-bar.png"/>
+			</div>
+		</nav>
+		<div class="container-fluid" id="map"></div>
+				
+		<script>
+			var map;
+			var markers =[];
+
+			function initMap() {
+				var bootcampLocations=JSON.parse({{.Data}});
+				var largeInfoWindow = new google.maps.InfoWindow();
+				 
+				var bounds = new google.maps.LatLngBounds();
+				
+				var styles = [
+					{	featureType: 'all',
+						elementType: 'all',
+						stylers: [
+						{ visibility: 'off' },
+						]
+					},
+					{	featureType: 'administrative',
+						elementType: 'all',
+						stylers: [
+						{ visibility: 'on' },
+						]
+					},
+					{	featureType: 'water',
+						elementType: 'all',
+						stylers: [
+						{ visibility: 'on' },
+						]
+					}
+				];
+				
+				map = new google.maps.Map(document.getElementById('map'), {
+					center: {lat: 0, lng: 0},
+					styles: styles,
+					zoom: 5,
+					mapTypeControl: false
+				});
+
+				
+				for (var i=0; i < bootcampLocations.length ; i++) {
+					var marker = new google.maps.Marker({
+							map : map,
+							position : bootcampLocations[i].position,
+							title :  bootcampLocations[i].city
+						});
+						marker.addListener('click',function() {populateInfoWindow(this,largeInfoWindow);});
+						bounds.extend(marker.position);
+						map.fitBounds(bounds);
+				}
+
+			
+				function populateInfoWindow(marker, infowindow) {
+						// Check to make sure the infowindow is not already opened on this marker.
+						if (infowindow.marker != marker) {
+						  infowindow.marker = marker;
+						  infowindow.setContent('<div class="infoMarker"><img src="../images/logo.png"/>' + marker.title + '</div>');
+						  infowindow.open(map, marker);
+						  // Make sure the marker property is cleared if the infowindow is closed.
+						  infowindow.addListener('closeclick',function(){
+							infowindow.marker=null;
+						  });
+						}
+				}
+			}
+		</script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKmwcRIx2Wg2QYJfhGZxIDhEuO5TXi_h0&v=3&callback=initMap"></script>
+	</body>
+</html>
