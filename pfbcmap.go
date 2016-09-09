@@ -8,7 +8,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	//"os"
+	"os"
 	"fmt"
 )
 
@@ -70,8 +70,7 @@ func responseHandler(w http.ResponseWriter, r *http.Request) {
 
 
 func main() {
-	//c, err := maps.NewClient(maps.WithAPIKey(os.Getenv("googleAPIKey")))
-	c, err := maps.NewClient(maps.WithAPIKey("AIzaSyDKmwcRIx2Wg2QYJfhGZxIDhEuO5TXi_h0"))
+	c, err := maps.NewClient(maps.WithAPIKey(os.Getenv("googleAPIKey")))
 	check("New Client", err)
 	
 	for val, location := range bootcampLocations {
