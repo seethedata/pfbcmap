@@ -3,13 +3,13 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"golang.org/x/net/context"
 	"googlemaps.github.io/maps"
+	"io"
 	"log"
 	"net/http"
 	"os"
-	"io"
-	"fmt"
 )
 
 var bootcampLocations = []Bootcamp{
@@ -41,17 +41,14 @@ var bootcampLocations = []Bootcamp{
 	{City: "Oakland, CA"},
 	{City: "Des Moines, IA"}}
 
-
 type Bootcamp struct {
 	City     string      `json:"city"`
 	Position maps.LatLng `json:"position"`
 }
 
-type templateData  struct {
+type templateData struct {
 	Data string
 }
-
-
 
 func check(function string, e error) {
 	if e != nil {
@@ -60,27 +57,24 @@ func check(function string, e error) {
 }
 
 func responseHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8") 
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	Data, err := json.Marshal(bootcampLocations)
 	check("Marshal", err)
-	io.WriteString(w,fmt.Sprintf("%s",Data))
+	io.WriteString(w, fmt.Sprintf("%s", Data))
 }
-
-
 
 func main() {
 	c, err := maps.NewClient(maps.WithAPIKey(os.Getenv("googleAPIKey")))
 	check("New Client", err)
-	
+
 	for val, location := range bootcampLocations {
 		r := &maps.GeocodingRequest{Address: location.City}
-		
+
 		resp, err := c.Geocode(context.Background(), r)
 		check("Geocode", err)
-		
+
 		bootcampLocations[val].Position = resp[0].Geometry.Location
 	}
-
 
 	http.HandleFunc("/data", responseHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
