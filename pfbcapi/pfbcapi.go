@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-var bootcampLocations = []Bootcamp{
+var bootcampLocations = []bootcamp{
 	{City: "Johannesburg, South Africa"},
 	{City: "Los Angeles, CA"},
 	{City: "Irvine, CA"},
@@ -41,7 +41,7 @@ var bootcampLocations = []Bootcamp{
 	{City: "Oakland, CA"},
 	{City: "Des Moines, IA"}}
 
-type Bootcamp struct {
+type bootcamp struct {
 	City     string      `json:"city"`
 	Position maps.LatLng `json:"position"`
 }
